@@ -1,0 +1,86 @@
+<div class="home-page">
+
+    <!-- Splash banner that only shows when not logged in -->
+    <div class="banner" show-authed="false">
+        <div class="container">
+            <h1 class="logo-font" ng-bind="::$currenyCtrl.appName | lowercase"></h1>
+            <p>Currency Manager</p>
+        </div>
+    </div>
+
+    <div class="container page">
+        <div class="row">
+            <!-- Main view - contains tabs & article list -->
+            <div class="col-md-9">
+                <!-- Tabs for toggling between feed, article lists -->
+                <form ng-submit="$currenyCtrl.saveRecord()">
+                    <div class="form-group md-4">
+                        <label for="status">Country</label>
+
+                        <select class="form-control" ng-options="country as country for country in $currenyCtrl.countries" ng-model="$currenyCtrl.currentFare.country" ng-change='$currenyCtrl.getCurrency($currenyCtrl.currentFare.country)'>
+                        </select>
+
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Fare</label>
+                            <div class="input-group">
+                                <span ng-if="$currenyCtrl.currentFare.country != 'Spain'" class="input-group-addon">{{$currenyCtrl.currentFare.currency}}</span>
+                                <input ng-model="$currenyCtrl.currentFare.fare" min="1" type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span ng-if="$currenyCtrl.currentFare.country == 'Spain'" class="input-group-addon">{{$currenyCtrl.currentFare.currency}}</span>
+                            </div>
+                        </div>
+
+                        <!-- <p>{{$currenyCtrl.currentFare.id}}</p>
+                        <h1>Hello</h1>
+                        <p>Hello</p> -->
+                        <input type="button" class="btn btn-primary" value="{{$currenyCtrl.currentFare.id == null ? 'Save' : 'Edit'}}" ng-click="$currenyCtrl.saveRecord()" class="btn btn-primary" />
+
+                </form>
+
+
+
+                <!-- List the current articles -->
+
+
+                </div>
+
+                <!-- Sidebar where popular tags are listed -->
+                <div class="col-md-9">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+
+                                <th scope="col">Country</th>
+                                <th scope="col">Fare</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in $currenyCtrl.fareCollections">
+
+                                <td> <input type="text" ng-model="data.country" ng-show="data.editable">
+                                    <span ng-hide="data.editable">{{ data.country }}</span>
+                                </td>
+
+                                <td> <input type="text" ng-model="data.country" ng-show="data.editable">
+                                    <span ng-hide="data.editable">{{ data.fare }}</span>
+                                </td>
+
+
+                                <td>
+                                    <button type="button" class="btn btn-warning" ng-click="$currenyCtrl.editRecord(data.id)"><i
+                                        class="bi bi-pencil-square"></i>Edit</button>
+                                    <button type="button" class="btn btn-danger" ng-click="$currenyCtrl.deleteRecord(data.id)"><i class="bi bi-trash"></i>Delete</button>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
